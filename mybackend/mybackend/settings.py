@@ -135,7 +135,7 @@ AUTH_USER_MODEL = 'app.CustomUser'
 
 # CORS settings
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",
+    "https://bankfront-t28c.onrender.com",
 ]
 
 CORS_ALLOW_CREDENTIALS = True
