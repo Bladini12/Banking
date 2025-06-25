@@ -8,6 +8,7 @@ services:
       python manage.py makemigrations
       python manage.py migrate
       python manage.py create_admin
+      python manage.py collectstatic --noinput
     envVars:
       - key: DATABASE_URL
         sync: false
