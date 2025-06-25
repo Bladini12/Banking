@@ -1,11 +1,10 @@
 import axios from 'axios';
 
 const api = axios.create({
-    baseURL: 'http://localhost:8000/api',
-    headers: {
-        'Content-Type': 'application/json',
-    },
+  baseURL: process.env.REACT_APP_API_BASE_URL,
+  withCredentials: true, // if you're using cookies for auth
 });
+
 
 // Request interceptor
 api.interceptors.request.use(
