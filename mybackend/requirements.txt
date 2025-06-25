@@ -5,3 +5,4 @@ psycopg2-binary>=2.9
  djangorestframework-simplejwt>=5.2
  gunicorn>=21.2 
  dj-database-url>=1.0
+ whitenoise>=6.0
