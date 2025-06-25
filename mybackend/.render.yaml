@@ -3,7 +3,10 @@ services:
     name: bank-backend
     env: python
     buildCommand: pip install -r requirements.txt
-    startCommand: gunicorn mybackend.wsgi
+   startCommand: |
+      python manage.py makemigrations --noinput
+      python manage.py migrate --noinput
+      gunicorn mybackend.wsgi:application
     preDeployCommand:
       python manage.py makemigrations
       python manage.py migrate
