@@ -18,7 +18,7 @@ from django.contrib import admin
 from django.urls import path, include
 
 urlpatterns = [
-    path('', lambda request: HttpsResponse("Welcome to the Bank App API!")),
+    path('', lambda request: HttpResponse("Welcome to the Bank App API!")),
     path('admin/', admin.site.urls),
     path('api/', include('app.urls')),
 ]
