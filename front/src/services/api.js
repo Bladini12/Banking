@@ -1,19 +1,24 @@
 import axios from 'axios';
 
-const api = axios.create({
-  baseURL: process.env.REACT_APP_API_BASE_URL,
-  withCredentials: true,
-  headers: {
-    'Accept': 'application/json',
-    'Content-Type': 'application/json',
-  }
-  // if you're using cookies for auth
-});
+console.log('API Base URL:', process.env.REACT_APP_API_BASE_URL);
 
+const api = axios.create({
+    baseURL: process.env.REACT_APP_API_BASE_URL || 'https://bankbackend-t28c.onrender.com/api',
+    withCredentials: true,
+    headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+    },
+});
 
 // Request interceptor
 api.interceptors.request.use(
     (config) => {
+        console.log('Making request to:', config.url);
+        console.log('Request method:', config.method);
+        console.log('Request data:', config.data);
+        console.log('Request headers:', config.headers);
+        
         const token = localStorage.getItem('access');
         if (token) {
             config.headers.Authorization = `Bearer ${token}`;
@@ -21,14 +26,21 @@ api.interceptors.request.use(
         return config;
     },
     (error) => {
+        console.error('Request interceptor error:', error);
         return Promise.reject(error);
     }
 );
 
 // Response interceptor
 api.interceptors.response.use(
-    (response) => response,
+    (response) => {
+        console.log('Response received:', response.status, response.data);
+        return response;
+    },
     async (error) => {
+        console.error('Response error:', error.response?.status, error.response?.data);
+        console.error('Error config:', error.config);
+        
         const originalRequest = error.config;
 
         // If the error is 401 and we haven't tried to refresh the token yet
@@ -41,7 +53,7 @@ api.interceptors.response.use(
                     throw new Error('No refresh token available');
                 }
 
-                const response = await axios.post('http://localhost:8000/api/auth/token/refresh/', {
+                const response = await axios.post(`${process.env.REACT_APP_API_BASE_URL || 'https://bankbackend-t28c.onrender.com/api'}/auth/token/refresh/`, {
                     refresh: refreshToken,
                 });
 
@@ -66,7 +78,12 @@ api.interceptors.response.use(
 );
 
 // Auth endpoints
-export const register = (data) => api.post('/auth/register/', data);
+export const register = (data) => {
+    console.log('Register function called with data:', data);
+    console.log('API base URL:', process.env.REACT_APP_API_BASE_URL);
+    console.log('Full URL will be:', `${process.env.REACT_APP_API_BASE_URL || 'https://bankbackend-t28c.onrender.com/api'}/auth/register/`);
+    return api.post('/auth/register/', data);
+};
 export const login = (data) => api.post('/auth/login/', data);
 export const refreshToken = (data) => api.post('/auth/token/refresh/', data);
 
