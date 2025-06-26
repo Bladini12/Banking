@@ -45,6 +45,7 @@ const Register = () => {
             };
 
             const response = await register(registrationData);
+            console.log('✅ Registration response:', response);
             if (response.data.status === 'success') {
                 // After successful registration, redirect to login
                 setError('✅ ' + response.data.message);
