@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'rest_framework_simplejwt',
     'corsheaders',
     'app',
 ]
@@ -135,10 +136,13 @@ AUTH_USER_MODEL = 'app.CustomUser'
 
 # CORS settings
 CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",
     "https://bankfront-t28c.onrender.com",
 ]
 
 CORS_ALLOW_CREDENTIALS = True
+
+CORS_ALLOW_ALL_ORIGINS = False
 
 CORS_ALLOW_METHODS = [
     'DELETE',
@@ -161,10 +165,14 @@ CORS_ALLOW_HEADERS = [
     'x-requested-with',
 ]
 
+# Additional CORS settings for better compatibility
+CORS_EXPOSE_HEADERS = ['content-type', 'authorization']
+CORS_PREFLIGHT_MAX_AGE = 86400
+
 # Security settings
-SECURE_SSL_REDIRECT = True  # Set to True in production
-SESSION_COOKIE_SECURE = True  # Set to True in production
-CSRF_COOKIE_SECURE = True  # Set to True in production
+SECURE_SSL_REDIRECT = os.environ.get('SECURE_SSL_REDIRECT', 'False') == 'True'  # Set to True in production
+SESSION_COOKIE_SECURE = os.environ.get('SESSION_COOKIE_SECURE', 'False') == 'True'  # Set to True in production
+CSRF_COOKIE_SECURE = os.environ.get('CSRF_COOKIE_SECURE', 'False') == 'True'  # Set to True in production
 SECURE_BROWSER_XSS_FILTER = True
 SECURE_CONTENT_TYPE_NOSNIFF = True
 X_FRAME_OPTIONS = 'DENY'
@@ -185,21 +193,9 @@ SIMPLE_JWT = {
     'USER_ID_CLAIM': 'user_id',
     'AUTH_TOKEN_CLASSES': ('rest_framework_simplejwt.tokens.AccessToken',),
     'TOKEN_TYPE_CLAIM': 'token_type',
+    'JTI_CLAIM': 'jti',
     'TOKEN_USER_CLASS': 'app.models.CustomUser',
     'AUTH_HEADER_NAME': 'HTTP_AUTHORIZATION',
-    'AUTH_TOKEN_CLASSES': ('rest_framework_simplejwt.tokens.AccessToken',),
-    'TOKEN_TYPE_CLAIM': 'token_type',
-    'JTI_CLAIM': 'jti',
-    'TOKEN_USER_CLASS': 'app.models.CustomUser',
-    'USER_ID_FIELD': 'id',
-    'USER_ID_CLAIM': 'user_id',
-    'USER_AUTHENTICATION_RULE': 'rest_framework_simplejwt.authentication.default_user_authentication_rule',
-    'AUTH_TOKEN_CLASSES': ('rest_framework_simplejwt.tokens.AccessToken',),
-    'TOKEN_TYPE_CLAIM': 'token_type',
-    'JTI_CLAIM': 'jti',
-    'TOKEN_USER_CLASS': 'app.models.CustomUser',
-    'USER_ID_FIELD': 'id',
-    'USER_ID_CLAIM': 'user_id',
     'USER_AUTHENTICATION_RULE': 'rest_framework_simplejwt.authentication.default_user_authentication_rule',
 }
 
