@@ -4,6 +4,7 @@
     margin: 0 auto;
     min-height: 100vh;
     background-color: #f5f5f5;
+    padding-top: 80px; /* Account for fixed navigation */
 }
 
 .dashboard-header {
@@ -516,16 +517,44 @@
 }
 
 @media (max-width: 768px) {
+    .dashboard {
+        padding: 10px;
+        padding-top: 120px; /* More space for mobile nav */
+    }
+
     .dashboard-nav {
-        padding: 1rem;
+        padding: 0.5rem 1rem;
+        flex-direction: column;
+        gap: 0.5rem;
+        position: relative;
+    }
+
+    .welcome-message {
+        font-size: 1.2rem;
+        text-align: center;
+    }
+
+    .nav-buttons {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.5rem;
+        width: 100%;
+    }
+
+    .deposit-button, .transfer-button, .loan-button, .logout-button {
+        padding: 0.5rem 0.75rem;
+        font-size: 0.9rem;
+        min-height: 40px;
     }
 
     .dashboard-content {
         padding: 1rem;
+        margin-top: 120px; /* Account for fixed nav */
     }
 
     .dashboard-grid {
         grid-template-columns: 1fr;
+        gap: 1rem;
     }
 
     .action-buttons {
@@ -534,5 +563,73 @@
 
     .profile-info {
         grid-template-columns: 1fr;
+    }
+
+    .info-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .user-info {
+        padding: 1rem;
+        margin-bottom: 1rem;
+    }
+
+    .recent-transactions {
+        padding: 1rem;
+    }
+
+    .transaction-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+
+    .transaction-info {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.25rem;
+        width: 100%;
+    }
+
+    .transaction-date {
+        align-self: flex-end;
+        min-width: auto;
+    }
+}
+
+@media (max-width: 480px) {
+    .dashboard {
+        padding: 5px;
+        padding-top: 140px; /* Even more space for smaller screens */
+    }
+
+    .dashboard-nav {
+        padding: 0.5rem;
+    }
+
+    .nav-buttons {
+        grid-template-columns: 1fr;
+        gap: 0.25rem;
+    }
+
+    .deposit-button, .transfer-button, .loan-button, .logout-button {
+        padding: 0.4rem 0.5rem;
+        font-size: 0.85rem;
+        min-height: 35px;
+    }
+
+    .welcome-message {
+        font-size: 1rem;
+    }
+
+    .dashboard-content {
+        margin-top: 140px;
+        padding: 0.5rem;
+    }
+
+    .user-info h2, .recent-transactions h2 {
+        font-size: 1.1rem;
+        margin-bottom: 1rem;
     }
 } 
