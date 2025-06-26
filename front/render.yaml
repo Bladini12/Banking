@@ -3,4 +3,8 @@ services:
     name: bank-frontend
     env: static
     buildCommand: npm install && npm run build
-    staticPublishPath: build 
+    staticPublishPath: build
+    envVars:
+      # Update this URL to match your actual backend URL from Render dashboard
+      - key: REACT_APP_API_BASE_URL
+        value: https://banking-4u5h.onrender.com/api 
