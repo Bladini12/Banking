@@ -47,7 +47,10 @@ const Register = () => {
             const response = await register(registrationData);
             if (response.data.status === 'success') {
                 // After successful registration, redirect to login
-                navigate('/login');
+                setError('✅ ' + response.data.message);
+                setTimeout(() => {
+                    navigate('/login');
+                }, 1500);
             } else {
                 setError(response.data.message || 'Registration failed. Please try again.');
             }
