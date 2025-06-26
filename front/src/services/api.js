@@ -3,7 +3,7 @@ import axios from 'axios';
 console.log('API Base URL:', process.env.REACT_APP_API_BASE_URL);
 
 const api = axios.create({
-    baseURL: process.env.REACT_APP_API_BASE_URL || 'https://bankbackend-t28c.onrender.com/api',
+    baseURL: process.env.REACT_APP_API_BASE_URL || 'https://banking-4u5h.onrender.com/api',
     withCredentials: true,
     headers: {
         'Accept': 'application/json',
@@ -53,7 +53,7 @@ api.interceptors.response.use(
                     throw new Error('No refresh token available');
                 }
 
-                const response = await axios.post(`${process.env.REACT_APP_API_BASE_URL || 'https://bankbackend-t28c.onrender.com/api'}/auth/token/refresh/`, {
+                const response = await axios.post(`${process.env.REACT_APP_API_BASE_URL || 'https://banking-4u5h.onrender.com/api'}/auth/token/refresh/`, {
                     refresh: refreshToken,
                 });
 
@@ -76,6 +76,18 @@ api.interceptors.response.use(
         return Promise.reject(error);
     }
 );
+
+// Test function to check backend connectivity
+export const testBackend = async () => {
+    try {
+        const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL || 'https://banking-4u5h.onrender.com/api'}/test/`);
+        console.log('Backend test successful:', response.data);
+        return response.data;
+    } catch (error) {
+        console.error('Backend test failed:', error);
+        throw error;
+    }
+};
 
 // Auth endpoints
 export const register = (data) => {
